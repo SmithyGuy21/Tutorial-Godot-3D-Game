@@ -128,7 +128,7 @@ offset_left = -284.0
 offset_top = -276.0
 offset_right = 276.0
 offset_bottom = 284.0
-uri = "https://github.com/SmithyGuy21"
+uri = "https://github.com/SmithyGuy21/Tutorial-Godot-3D-Game"
 
 [node name="StartMenu" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_y1das")
