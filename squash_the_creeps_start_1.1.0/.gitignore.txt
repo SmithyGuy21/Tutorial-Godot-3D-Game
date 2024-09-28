@@ -1,0 +1,7 @@
+# Godot-specific files
+.import/                # Godot's import cache (can be regenerated)
+
+# Godot auto-generated files
+*.log                   # Log files
+*.tmp                   # Temporary files
+*.godot                 # Godot project binary file (cache, not necessary)

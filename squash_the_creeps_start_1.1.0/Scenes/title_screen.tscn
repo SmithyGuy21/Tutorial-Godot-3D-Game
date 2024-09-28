@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwjbb83oxald6"]
+
+[ext_resource type="Script" path="res://Scripts/title_screen.gd" id="1_m222v"]
+[ext_resource type="Texture2D" uid="uid://b5rynfmus8ijs" path="res://Images/icon.png" id="2_0af3u"]
+[ext_resource type="Texture2D" uid="uid://dgenang6xmwqn" path="res://Images/Github Link.png" id="3_gvyb7"]
+[ext_resource type="AudioStream" uid="uid://bakk201ia2va6" path="res://Audio/StartMenu.mp3" id="4_y1das"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_61wjx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3aoq"]
+bg_color = Color(0.156347, 0.619279, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tck6f"]
+bg_color = Color(0.000765183, 0.463234, 0.782657, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yisn"]
+bg_color = Color(0.027451, 0.596078, 0.984314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m222v")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.924213, 0.478799, 0.152143, 1)
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = 12.19
+offset_right = 99.0
+offset_bottom = 58.19
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_61wjx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j3aoq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tck6f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7yisn")
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = 81.0
+offset_right = 100.0
+offset_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_61wjx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j3aoq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tck6f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7yisn")
+text = "Quit"
+
+[node name="Top Anchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Logo" type="Sprite2D" parent="Top Anchor"]
+position = Vector2(23, 135)
+scale = Vector2(2.375, 2.375)
+texture = ExtResource("2_0af3u")
+
+[node name="Top Right Anchor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Top Right Anchor"]
+position = Vector2(6.99999, 33)
+scale = Vector2(0.119643, 0.119643)
+texture = ExtResource("3_gvyb7")
+
+[node name="LinkButton" type="LinkButton" parent="Top Right Anchor/Sprite2D"]
+offset_left = -284.0
+offset_top = -276.0
+offset_right = 276.0
+offset_bottom = 284.0
+uri = "https://github.com/SmithyGuy21"
+
+[node name="StartMenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_y1das")
+volume_db = -4.685
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

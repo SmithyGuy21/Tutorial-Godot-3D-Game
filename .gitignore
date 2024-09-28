@@ -1,0 +1,8 @@
+# Godot auto-generated files
+*.log
+*.tmp
+*.godot
+*.cfg
+*.import
+/squash_the_creeps_start_1.1.0/.godot
+squash_the_creeps_start_1.1.0/TODO.txt

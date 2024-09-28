@@ -1,0 +1,159 @@
+[gd_scene load_steps=16 format=3 uid="uid://egf3v44epmos"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_5sxko"]
+[ext_resource type="PackedScene" uid="uid://dgk4a4cbs3kpx" path="res://Scenes/player.tscn" id="1_ovtid"]
+[ext_resource type="PackedScene" uid="uid://bejnh36g2tfjx" path="res://Scenes/mob.tscn" id="2_0b2xi"]
+[ext_resource type="FontFile" uid="uid://cf7h6tredkan7" path="res://Fonts/Montserrat-Medium.ttf" id="4_vknlw"]
+[ext_resource type="Script" path="res://Scripts/score_label.gd" id="5_2sme3"]
+[ext_resource type="AudioStream" uid="uid://o55xvayiqj1u" path="res://Audio/Game Over.mp3" id="6_6ye2d"]
+[ext_resource type="AudioStream" uid="uid://dcm0yeu71bhix" path="res://Audio/House In a Forest Loop.ogg" id="7_tmtrm"]
+[ext_resource type="AudioStream" uid="uid://bgptk7gev3o8m" path="res://Audio/Select.wav" id="8_pek5w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d05ky"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmu1j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhyrw"]
+albedo_color = Color(0.948943, 0.4229, 5.77569e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m8lvj"]
+material = SubResource("StandardMaterial3D_lhyrw")
+
+[sub_resource type="Curve3D" id="Curve3D_60a32"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -12.7817, 0.011488, -14.2275, 0, 0, 0, 0, 0, 0, 12.8208, 0.0112839, -14.374, 0, 0, 0, 0, 0, 0, 12.9401, 0.0942101, 15.1559, 0, 0, 0, 0, 0, 0, -12.9035, 0.228864, 15.0974, 0, 0, 0, 0, 0, 0, -12.7817, 0.011488, -14.2275),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="Theme" id="Theme_hy1vx"]
+default_font = ExtResource("4_vknlw")
+
+[sub_resource type="Theme" id="Theme_der2b"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_5sxko")
+mob_scene = ExtResource("2_0b2xi")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(60, 0, 0, 0, 2, 0, 0, 0, 60, 0, 0, 0)
+shape = SubResource("BoxShape3D_d05ky")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(60, 0, 0, 0, 2, 0, 0, 0, 60, 0, 0, 0)
+mesh = SubResource("BoxMesh_vmu1j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1.19209e-07, 1, 0, -1, -1.19209e-07, 0, 24, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_ovtid")]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+projection = 1
+size = 19.0
+
+[node name="CameraEdges" type="Node3D" parent="."]
+visible = false
+
+[node name="TopRight" type="MeshInstance3D" parent="CameraEdges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2465, 0, -14.2147)
+mesh = SubResource("CylinderMesh_m8lvj")
+
+[node name="BottomRight" type="MeshInstance3D" parent="CameraEdges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2465, 0, 15.226)
+mesh = SubResource("CylinderMesh_m8lvj")
+
+[node name="TopLeft" type="MeshInstance3D" parent="CameraEdges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.242, 0, -14.215)
+mesh = SubResource("CylinderMesh_m8lvj")
+
+[node name="Bottom Left" type="MeshInstance3D" parent="CameraEdges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.242, 0, 15.226)
+mesh = SubResource("CylinderMesh_m8lvj")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_60a32")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(0.00572194, 7.97161e-06, -0.999977, -4.54745e-13, 0.999998, 7.9717e-06, 0.999978, -4.56136e-08, 0.00572193, -12.7817, 0.011488, -14.2275)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_hy1vx")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -2.0
+offset_right = 153.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(0.85098, 0.427451, 0.180392, 1)
+theme_override_font_sizes/font_size = 37
+text = "Score: 0"
+script = ExtResource("5_2sme3")
+
+[node name="Score" type="Label" parent="UserInterface/ScoreLabel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 21.0
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.247059, 0.247059, 0.247059, 0.678431)
+
+[node name="RetryText" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -10.5
+offset_right = 118.0
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_der2b")
+theme_override_colors/font_color = Color(0.989753, 0.000896195, 0.000491704, 1)
+theme_override_font_sizes/font_size = 28
+text = "Press r or r1 to Retry"
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6ye2d")
+volume_db = -10.0
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_tmtrm")
+volume_db = -10.0
+
+[node name="Select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_pek5w")
+volume_db = -4.685
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
